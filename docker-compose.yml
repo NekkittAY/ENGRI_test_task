@@ -1,0 +1,24 @@
+# docker-compose.yml
+
+services:
+  api:
+    container_name: backend_api
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend_api:/api
+    depends_on:
+      test:
+        condition: service_completed_successfully
+
+  test:
+    container_name: test_api
+    build:
+      context: .
+      dockerfile: docker/test/Dockerfile
+
+volumes:
+  backend_api:
